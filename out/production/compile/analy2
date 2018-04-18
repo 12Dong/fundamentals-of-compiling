@@ -1,0 +1,10 @@
+var x,y;
+procedure fun;
+	var  a,b,c;
+	begin
+    	A:=1;
+    	x:=a+b;
+    	end;
+    begin
+    call fun;
+    end.

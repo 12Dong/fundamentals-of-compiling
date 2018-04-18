@@ -1,0 +1,16 @@
+var m,n,r;
+begin
+read(m);
+read(n);
+// 为了方便，规定m >= n
+if m < n then
+begin
+r := m;
+m := n;
+n := r;
+end;
+begin
+r:=1;
+write(m);
+end;
+end.

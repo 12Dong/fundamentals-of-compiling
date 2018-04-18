@@ -1,0 +1,7 @@
+const A=10;
+var B,c;
+begin
+    read(b);
+    c:=a/b;
+    write(c);
+end.
