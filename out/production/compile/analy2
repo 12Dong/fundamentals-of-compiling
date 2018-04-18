@@ -9,9 +9,3 @@ procedure fun;
     call fun;
     end.
 
-var b,c;
-begin
-    read(b);
-    c:=a+b;
-    write(c);
-end.
