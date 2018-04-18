@@ -1,0 +1,10 @@
+(varsym   var)
+(ident    x)
+(semicolon  ;)
+read(x);
+(readsym   read)
+(lparen    ()
+(ident    x)
+(rparen    ))
+(semicolon    ;)
+3 行 缺少 （ 或者 ）

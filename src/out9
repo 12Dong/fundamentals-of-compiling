@@ -1,0 +1,8 @@
+(varsym   var)
+(ident    a)
+(comma    ,)
+(ident    b)
+(eql      =)
+(number   1)
+(comma    ,)
+1 行 var变量 应为整数 或 变量
