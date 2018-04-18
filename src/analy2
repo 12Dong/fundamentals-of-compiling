@@ -8,3 +8,4 @@ procedure fun;
     begin
     call fun;
     end.
+

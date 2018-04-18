@@ -5,6 +5,8 @@ import java.util.Map;
 public class week3 {
     static Map<String,String> map;
     static Map<String,String> signMap;
+    static Map<String,String> varStack;
+    static String filter;
     public static void makeMap(){
         map = new HashMap<>();
         map.put("const","constsym");
@@ -44,31 +46,37 @@ public class week3 {
         FileOutputStream outputStream = null;
         FileWriter fw = null;
         makeMap();
+        makeSignMap();
+
         for(int k=1;k<=1;k++){
-            FileInputStream inputStream = new FileInputStream("/Users/12dong/Downloads/SSM_BookSystem-master/compile/src/analy"+k);
-            outputStream = new FileOutputStream("/Users/12dong/Downloads/SSM_BookSystem-master/compile/src/out"+k+".txt");
+            varStack = new HashMap<>();
+            FileInputStream inputStream = new FileInputStream("/Users/12dong/IdeaProjects/compile/src/analy"+k);
+//            outputStream = new FileOutputStream("/Users/12dong/Downloads/SSM_BookSystem-master/compile/src/out"+k+".txt");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String str = null;
             int rows = 0;
             while((str=bufferedReader.readLine())!=null){
+                boolean type = false;
                 rows++;
-                String filter = "";
+                filter = "";
                 for(int i=0;i<str.length();i++){
                     if(str.charAt(i)=='/' && i!=str.length()-1 && str.charAt(i+1)=='/') break;
 //                System.out.println(str.charAt(i));
                     str  = str.trim();
                     str = str.toLowerCase();
-                    char current=str.charAt(i);
-                    if(current==' ' && i>=1 && str.charAt(i-1)==' ') continue;
-                    if(current=='=' || current==';' || current==',' || current=='+' || current==' '|| current=='(' || current==')' ||current=='.' || current==':'
-                            || current=='+' || current=='-' || current=='*' || current=='/' || current=='#' || current=='>' ||  current=='<' || current==' '){
+                    String current=""+str.charAt(i);
+                    if(current==" " && i>=1 && str.charAt(i-1)==' ') continue;
+                    if(signMap.containsKey(current) || current==" "){
+                        //判断 关键词
                         if(map.containsKey(filter)){
-//                            outputStream.write(("("+map.get(filter)+"  "+filter+")").getBytes());
-//                            outputStream.write("\n".getBytes());
+                            if(type==true){
+                                System.out.println(rows+"行出错  错误原因:关键词 被当作变量使用!  ");
+                            }
+                            type = true;
                             System.out.println("("+map.get(filter)+"  "+filter+")");
                         }else{
-                            String regx = "^[0-9]{1,10}";
-                            if(current==' '){
+                            String regx = "^[0-9]*";
+                            if(current==" "){
                                 filter="";
                                 continue;
                             }
@@ -80,63 +88,36 @@ public class week3 {
 //                                outputStream.write(("(ident   "+filter+")").getBytes());
                                 System.out.println("(ident    "+filter+")");
                             }
-                            outputStream.write("\n".getBytes());
+//                            outputStream.write("\n".getBytes());
                         }
-                        if(current==':'){
+
+
+                        if(current==":"){
 //                            outputStream.write(("(becomes   :=)   ").getBytes());
                             System.out.println("(becomes  :=)");
                             i++;
-                        }else if(current=='='){
-//                            outputStream.write(("(eql      =)   ").getBytes());
-                            System.out.println("(eql      =)");
-                        }else if(current==';'){
-//                            outputStream.write(("(semicolon   ;)   ").getBytes());
-                            System.out.println("(semicolon  ;)");
-                        }else if(current==','){
-//                            outputStream.write(("(comma   ,)   ").getBytes());
-                            System.out.println("(comma    ,)");
-                        }else if(current=='('){
-//                            outputStream.write(("(lparen   ()   ").getBytes());
-                            System.out.println("(lparen   ()");
-                        }else if(current==')'){
-//                            outputStream.write(("(rparen   ))   ").getBytes());
-                            System.out.println("(rparen   ))");
-                        }else if(current=='+'){
-//                            outputStream.write(("(plus   +)   ").getBytes());
-                            System.out.println("(plus     +)");
-                        }else if(current=='.'){
-//                            outputStream.write(("(period   .)   ").getBytes());
-                            System.out.println("(period   .)");
-                        }else if(current=='-'){
-//                            outputStream.write(("(minus   -)   ").getBytes());
-                            System.out.println("(minus    -)");
-                        }else if(current=='*'){
-//                            outputStream.write(("(times   *)   ").getBytes());
-                            System.out.println("(times    *)");
-                        }else if(current=='/'){
-//                            outputStream.write(("(slash   /)   ").getBytes());
-                            System.out.println("(slash    /)");
-                        }else if(current=='#'){
-//                            outputStream.write(("(neq   #)   ").getBytes());
-                            System.out.println("(neq      #)");
-                        }else if(current=='<'){
-                            if(str.charAt(i+1)=='='){
+                        }else if(signMap.containsKey(current)){
+                            if(current=="<") {
+                                if (str.charAt(i + 1) == '=') {
 //                                outputStream.write(("(leq   <=)   ").getBytes());
-                                System.out.println("(leq      <=)");
-                                i++;
-                            }else{
+                                    System.out.println("(leq      <=)");
+                                    i++;
+                                } else {
 //                                outputStream.write(("(lss   <)   ").getBytes());
-                                System.out.println("(lss      <)");
+                                    System.out.println("(lss      <)");
+                                }
                             }
-                        }else if(current=='>'){
-                            if(str.charAt(i+1)=='='){
+                            if(current==">"){
+                                if(str.charAt(i+1)=='='){
 //                                outputStream.write(("(geq   >=)   ").getBytes());
-                                System.out.println("(geq      >=");
-                                i++;
-                            }else{
+                                    System.out.println("(geq      >=");
+                                    i++;
+                                }else{
 //                                outputStream.write(("(ggr   >)   ").getBytes());
-                                System.out.println("(ggr      >)");
+                                    System.out.println("(ggr      >)");
+                                }
                             }
+                            System.out.println("("+signMap.get(current)+"  "+current+")");
                         }
 //                        outputStream.write("\n".getBytes());
                         filter="";
@@ -144,6 +125,7 @@ public class week3 {
                         filter+=current;
                     }
                 }
+                //  ;结束判断
                 if(map.containsKey(filter)){
 //                    outputStream.write(("("+map.get(filter)+"  "+filter+")").getBytes());
                     System.out.println("("+map.get(filter)+"  "+filter+")");
