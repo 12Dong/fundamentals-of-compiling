@@ -1,3 +1,5 @@
-var x;
-read(x);
-write(x;
+const a=10;
+var b=1,c;
+begin
+    c:=b*5;
+end.

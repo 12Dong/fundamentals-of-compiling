@@ -1,8 +1,9 @@
+import utils.Utils;
+
+import java.util.Arrays;
+
 public class test {
     static public void main(String argv[]){
-        String segments[] = "read(x);".split("[()]");
-        for(String segment:segments){
-            System.out.println(segment);
-        }
+        System.out.println(Utils.culate("10+5"));
     }
 }

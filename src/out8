@@ -1,11 +1,23 @@
+Connected to the target VM, address: '127.0.0.1:56908', transport: 'socket'
 (varsym   var)
 (ident    a)
 (comma    ,)
 (ident    b)
 (eql      =)
 (number   1)
-(comma    ,)
-(ident    c)
-(eql      =)
-(ident    b)
+(semicolon  ;)
+表达式 = V = :(1+2)+2
+(ident    a )
+(becomes    :=)
+(number     )
+(lparen    ()
+(number     1)
+(plus    +)
+(number     2)
+(rparen    ))
+(number     )
+(plus    +)
+(number     2)
+转化后表达式 = V =  (1+2)+2
+a  = 5
 (semicolon  ;)

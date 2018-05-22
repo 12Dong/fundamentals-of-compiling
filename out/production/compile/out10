@@ -1,10 +1,24 @@
-(varsym   var)
-(ident    x)
+(constsym   const)
+(ident    a)
+(eql      =)
+(number   10)
 (semicolon  ;)
-read(x);
-(readsym   read)
-(lparen    ()
-(ident    x)
-(rparen    ))
-(semicolon    ;)
-3 行 缺少 （ 或者 ）
+(varsym   var)
+(ident    b)
+(eql      =)
+(number   1)
+(comma    ,)
+(ident    c)
+(semicolon  ;)
+(beginsym    begin)
+表达式 = V = :b*5
+(ident    c)
+(becomes    :=)
+(ident     b)
+(times    *)
+(number     5)
+转化后表达式 = V =  1*5
+c = 5
+(semicolon  ;)
+(endsym    end)
+(period   .)
